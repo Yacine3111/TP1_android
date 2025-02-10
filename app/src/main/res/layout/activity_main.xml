@@ -1,19 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:theme="@style/TextSize">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:inputType="numberDecimal"
+        android:hint="@string/hint_EditText1"
+        />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:hint="@string/hint_EditText2"
+        android:focusable="false"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonConverte"
+        android:layout_weight="1"
+        android:text="@string/text_button_convert"
+        style="@style/ButtonStyle"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/buttonReverse"
+        android:layout_weight="1"
+        android:text="@string/text_button_reverse"
+        style="@style/ButtonStyle"
+        />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textHistory"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/text_history"
+        />
+
+    <Button
+        android:id="@+id/eraseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:text="@string/text_erase"
+        style="@style/EraseButtonStyle"
+        />
+    <TextView
+        android:id="@+id/resultsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tst"
+        />
+</LinearLayout>

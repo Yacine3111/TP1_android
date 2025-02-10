@@ -1,6 +1,7 @@
 package com.example.tp1;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
