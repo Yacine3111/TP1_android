@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
+    android:layout_marginTop="75dp"
     android:theme="@style/TextSize">
 
 
@@ -13,10 +14,11 @@
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:spinnerMode="dropdown"/>
 
     <EditText
-        android:id="@+id/textView1"
+        android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -28,10 +30,11 @@
         android:id="@+id/spinner2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:spinnerMode="dropdown"/>
 
     <EditText
-        android:id="@+id/textView2"
+        android:id="@+id/editTextResult"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -43,21 +46,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     <Button
-        android:id="@+id/buttonConverte"
+        android:id="@+id/converteButton"
         android:layout_weight="1"
         android:text="@string/text_button_convert"
         style="@style/ButtonStyle"
         />
 
     <Button
-        android:id="@+id/buttonReverse"
+        android:id="@+id/reverseButton"
         android:layout_weight="1"
         android:text="@string/text_button_reverse"
         style="@style/ButtonStyle"
         />
     </LinearLayout>
     <TextView
-        android:id="@+id/textHistory"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/text_history"
@@ -71,10 +73,9 @@
         android:text="@string/text_erase"
         style="@style/EraseButtonStyle"
         />
-    <TextView
-        android:id="@+id/resultsText"
+    <LinearLayout
+        android:id="@+id/historyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tst"
-        />
+        android:orientation="vertical" />
 </LinearLayout>
