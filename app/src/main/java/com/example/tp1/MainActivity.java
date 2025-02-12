@@ -17,8 +17,24 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
-    Dictionary<String,Double> conversionsDictionary =new Hashtable<>();
+    Dictionary<String,Double> conversionsDictionary =new Hashtable<>()
+    {{
+        put("CADEUR",0.67);
+        put("CADGBP",0.56);
+        put("CADUSD",0.69);
+        put("EURCAD",1.5);
+        put("EURGBP",0.84);
+        put("EURUSD",1.04);
+        put("GBPCAD",1.79);
+        put("GBPEUR",1.19);
+        put("GBPUSD",1.24);
+        put("USDCAD",1.44);
+        put("USDEUR",0.96);
+        put("USDGBP",0.81);
+    }};
     String[] currencies={"CAD","EUR","GBP","USD"};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +42,6 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        conversionsDictionary.put("CADEUR",0.67);
-        conversionsDictionary.put("CADGBP",0.56);
-        conversionsDictionary.put("CADUSD",0.69);
-        conversionsDictionary.put("EURCAD",1.5);
-        conversionsDictionary.put("EURGBP",0.84);
-        conversionsDictionary.put("EURUSD",1.04);
-        conversionsDictionary.put("GBPCAD",1.79);
-        conversionsDictionary.put("GBPEUR",1.19);
-        conversionsDictionary.put("GBPUSD",1.24);
-        conversionsDictionary.put("USDCAD",1.44);
-        conversionsDictionary.put("USDEUR",0.96);
-        conversionsDictionary.put("USDGBP",0.81);
 
         Spinner spinner1 = findViewById(R.id.spinner1);
         Spinner spinner2=findViewById(R.id.spinner2);
@@ -54,33 +58,35 @@ public class MainActivity extends AppCompatActivity {
 
 
         convertButton.setOnClickListener(View->{
+            String spinner1Value,spinner2Value,key;
+            spinner1Value=spinner1.getSelectedItem().toString();
+            spinner2Value=spinner2.getSelectedItem().toString();
+            key=spinner1Value+spinner2Value;
             //verification que les deux devises sont différente
-            if(spinner1.getSelectedItem()==spinner2.getSelectedItem()){
+            if(spinner1Value.equals(spinner2Value)){
                 alertMessage("Vous devez choisir deux devises différentes");
                 //on vérifie si la conversion existe
-            } else if (conversionsDictionary.get(spinner1.getSelectedItem().toString()+spinner2.getSelectedItem().toString())==null) {
+            } else if (conversionsDictionary.get(key)==null) {
                 alertMessage("Taux non disponible pour cette conversion");
+            } else if (editTextValue.getText().toString().isBlank()) {
+                alertMessage("Veuillez entrer une valeur.");
             } else{
                 //on essaye de convertir ou bien on envoie un message pour demander à entrer une valeur
-                try {
-                    editTextResult.setText(convert(spinner1,spinner2,editTextValue));
-                    setHistory(editTextValue,editTextResult,spinner1,spinner2,historyLinearLayout);
-                }catch (NumberFormatException e){
-                    alertMessage("Veuillez entrer une valeur.");
-                }
+                    editTextResult.setText(convert(key,editTextValue));
+                    setHistory(editTextValue,editTextResult,spinner1Value,spinner2Value,historyLinearLayout);
             }
         });
 
         reverseButton.setOnClickListener(View->{
+            String spinner1Value = spinner1.getSelectedItem().toString();
+            String spinner2Value = spinner2.getSelectedItem().toString();
             //verification que les deux devises sont différente
-            if(spinner1.getSelectedItem()==spinner2.getSelectedItem()){
+            if(spinner1Value.equals(spinner2Value)){
                 alertMessage("Vous devez choisir deux devises différentes");
             }else {
                 //on prend les valeurs des deux spinner et on les met dans des String puis on assigne celui de l'un à l'autre
-                String spinner1Srt = spinner1.getSelectedItem().toString();
-                String spinner2Srt = spinner2.getSelectedItem().toString();
-                spinner1.setSelection(spinnerArrayAdapter.getPosition(spinner2Srt));
-                spinner2.setSelection(spinnerArrayAdapter.getPosition(spinner1Srt));
+                spinner1.setSelection(spinnerArrayAdapter.getPosition(spinner2Value));
+                spinner2.setSelection(spinnerArrayAdapter.getPosition(spinner1Value));
                 editTextResult.setText("");
             }
         });
@@ -92,30 +98,30 @@ public class MainActivity extends AppCompatActivity {
     private void alertMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-    private void setHistory(EditText editTextValue,EditText editTextResult, Spinner spinner1,Spinner spinner2,LinearLayout linearLayout){
+    private String convert(String key, EditText text){
+        double result;
+        result=Double.parseDouble(text.getText().toString());
+        result *= conversionsDictionary.get(key);
+        //on formate la valeur avec le String.format() à deux chiffre après la virgule
+        return String.format("%.2f",result);
+    }
+    private void setHistory(EditText editTextValue,EditText editTextResult, String spinner1Value,String spinner2Value,LinearLayout linearLayout){
         //on convertie en Double la valeur pour qu'on puisse la formater à 2 chiffres après la virgule
-        Double EditTextValueDouble=Double.parseDouble(editTextValue.getText().toString());
+        Double EditTextValueDouble=0.0;
+        EditTextValueDouble=Double.parseDouble(editTextValue.getText().toString());
+        String key =spinner1Value+spinner2Value;
         TextView textView;
         //on vérifie si le taux de conversion est plus grand ou égale à 1 pour donner la couleur
-        if(conversionsDictionary.get(spinner1.getSelectedItem().toString()+spinner2.getSelectedItem().toString())>=1){
+        if(conversionsDictionary.get(key)>=1){
             textView =new TextView(new ContextThemeWrapper(this,R.style.HistoryStyleGreen));
         }
         else {
             textView =new TextView(new ContextThemeWrapper(this,R.style.HistoryStyleRed));
         }
         //on formate la valeur avec le String.format() à deux chiffre après la virgule
-        textView.setText(String.format("%.2f",EditTextValueDouble)+" "+spinner1.getSelectedItem().toString()+" = "
-                +editTextResult.getText()+" "+spinner2.getSelectedItem().toString());
+        textView.setText(String.format("%.2f",EditTextValueDouble)+" "+spinner1Value+" = "
+                +editTextResult.getText()+" "+spinner2Value);
 
         linearLayout.addView(textView,0);
-    }
-    private String convert(Spinner spinner1, Spinner spinner2, EditText text){
-        double value,result;
-        value=Double.parseDouble(text.getText().toString());
-        result= value* conversionsDictionary.get(spinner1.getSelectedItem().toString()+spinner2.getSelectedItem().toString());
-
-        //on formate la valeur avec le String.format() à deux chiffre après la virgule
-        return String.format("%.2f",result);
     }
 }
