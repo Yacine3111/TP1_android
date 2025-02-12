@@ -23,7 +23,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:inputType="numberDecimal"
-        android:hint="@string/hint_EditText1"
+        android:hint="@string/hint_EditTextValue"
         />
 
     <Spinner
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:hint="@string/hint_EditText2"
+        android:hint="@string/hint_EditTextResult"
         android:focusable="false"
         />
     <LinearLayout

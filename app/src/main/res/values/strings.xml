@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TP1</string>
-    <string name="hint_EditText1">Valeur à convertir</string>
-    <string name="hint_EditText2">Résultat</string>
+    <string name="hint_EditTextValue">Valeur à convertir</string>
+    <string name="hint_EditTextResult">Résultat</string>
     <string name="text_button_convert">Convertir</string>
     <string name="text_button_reverse">Inverser</string>
     <string name="text_history">Historique des conversions</string>
